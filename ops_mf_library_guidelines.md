@@ -191,7 +191,7 @@ relevant.
 
         assert sw1 is not None
 
-        vlan.create_vlan_interface(node=sw1, vlan_id=1, ip_address=10.10.10.5/8)
+        vlan.create_vlan_interface(node=sw1, vlan_id="1", ip_address="10.10.10.5/8")
 
         process_information.assert_process_is_running(node=sw1, process_name="restd", step=step)
 
