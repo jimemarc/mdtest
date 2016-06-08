@@ -54,17 +54,17 @@ For each module, describe the module in the docstring :
 
 As a convention, the format we will use for docstrings is as follows:
 
-    def function_name1(1st_param, 2nd_param, 3rd_param):
+    def function_name1(param1, param2, param3):
        """
        Brief description of function
 
        Detailed descrption of function
 
-       :param 1st_param: <0-255> Description
-       :param type_x 2nd_param: The description of this parameter is too long
+       :param param1: <0-255> Description
+       :param type_x param2: The description of this parameter is too long
           to fit in one line.  Use indentation.
-       :param 3rd_param: Description
-       :type 3rd_param: type_of_3rd_param
+       :param param3: Description
+       :type param3: type_of_param3
        :returns: Description of the return value
        :rtype: return_type
        """
@@ -76,7 +76,7 @@ As a convention, the format we will use for docstrings is as follows:
 
 > **Warning**
 >
-> The indentation in the multiline description of `2nd_param` is
+> The indentation in the multiline description of `param2` is
 > mandatory. Any number of spaces produces the same output.
 
 
@@ -125,7 +125,7 @@ As a convention, the format we will use for docstrings is as follows:
 
 ## Global variables
 
-For absolutely important global variables and constants write
+For absolutely necessary cases, add important global variables and constants like this:
 
     variable_name = 1000
     """This is an important global variable."""

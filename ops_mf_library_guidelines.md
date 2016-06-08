@@ -28,9 +28,9 @@ comply with Flake8 (already required in order to write component tests).
   This allows autogenerating the documentation for the complete common code library, which users can
   consult to see if a function already exists.
 1. Lower case with underscores for variable and function names. Try to keep function names compact.
-    ```
-    restd_process_state = get_process_state(name="restd")
-    ```
+
+        restd_process_state = get_process_state(name="restd")
+
 1. Avoid hardcoding values -- try to use function arguments if possible.
 1. Use named arguments to improved readability:
 
