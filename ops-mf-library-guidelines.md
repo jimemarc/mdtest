@@ -1,60 +1,77 @@
 # OPS Modular Framework Library Guidelines
 
 ## Overview
-This document contains guidelines for teams working on modular framework libraries. The main intent is to provide solutions for common questions and provide consistency throughout different libraries, which are by nature, emergent, as new projects or improvements generate more testing needs.
+This document contains guidelines for teams working on modular framework libraries. The main intent
+is to provide solutions for common questions and provide consistency throughout different libraries,
+which are by nature, emergent, as new projects or improvements generate more testing needs.
 
 ## Code organization
-New library code normally falls in two categories: 1) feature-specific and 2) common. The decision of which functionality belongs to which category is something that should be discussed with the feature dev/test team and the common library maintainers, who will provide guidance (for example, if a given common functionality is already available or being worked on).
+New library code normally falls in two categories: 1) feature-specific and 2) common. The decision
+of which functionality belongs to which category is something that should be discussed with the
+feature dev/test team and the common library maintainers, who will provide guidance (for example,
+if a given common functionality is already available or being worked on).
 
-Feature-specific code should be checked in the feature repo itself, within the tests/component folder and is meant to be maintained by the feature team.
+Feature-specific code should be checked in the feature repo itself, within the tests/component
+folder and is meant to be maintained by the feature team.
 
-Common code should ideally be made available for other teams to reduce work duplication and maintain consistency. Whenever a team needs common functionality, it should first check to see if it's available and if not, coordinate with the common library maintainers on how to contribute that code.
+Common code should ideally be made available for other teams to reduce work duplication and maintain consistency. Whenever a team needs common functionality, it should first check to see if it's
+available and if not, coordinate with the common library maintainers on how to contribute that code.
 
-For the organization of code itself, refer to the 'How to' guide.
+For the organization of code itself, refer to the [How to guide](how_to_guide.md).
 
 ## Guidelines
-1. Code should follow the Python Style Guide (https://www.python.org/dev/peps/pep-0008/) as well as comply with Flake8 (already required in order to write component tests).
-  1. Follow PEP 0257 for docstrings (https://www.python.org/dev/peps/pep-0257/) -- this allows autogenerating the documentation for the complete common code library, which users can consult to see if a function already exists.
+1. Code should follow the [Python Style Guide](https://www.python.org/dev/peps/pep-0008/) as well as
+comply with Flake8 (already required in order to write component tests).
+  1. Follow th general guidelines in [PEP 0257](https://www.python.org/dev/peps/pep-0257/) for
+  docstrings.
+  1. Use the guidelines in [AutoAPI](http://autoapi.readthedocs.io/en/latest/#documenting-the-code).
+  This allows autogenerating the documentation for the complete common code library, which users can
+  consult to see if a function already exists.
 1. Lower case with underscores for variable and function names. Try to keep function names compact.
-    Ex. restd_process_state = get_process_state(name="restd")
-1. Avoid hardcoding values -- try to use function arguments if possible
+    Ex. `restd_process_state = get_process_state(name="restd")`
+1. Avoid hardcoding values -- try to use function arguments if possible.
 1. Use named arguments to improved readability:
-    create_vlan(vlan_id=100)
+    `create_vlan(vlan_id="100")`
 1. Prefer parameters vs creating many methods with different names.
-    create_vlan(vlan_id=100, mode="access") and create_vlan(vlan_id="100", mode="native")
+    `create_vlan(vlan_id="100", mode="access")` and `create_vlan(vlan_id="100", mode="native")`
 
     vs
 
-    create_access_vlan(vlan_id="100") and create_native_vlan(vlan_id=100)
-1. Provide sensible argument defaults which cover most use cases if possible. Ex. create_vlan(vlan_id=100, mode="access", status="no_shutdown")
+    `create_access_vlan(vlan_id="100")` and `create_native_vlan(vlan_id="100")`
+1. Provide sensible argument defaults which cover most use cases if possible.
+    Ex. `create_vlan(vlan_id=100, mode="access", status="no_shutdown")`
 1. Action verbs:
   1. **assert**: assert a condition -- no values are returned.
-        assert_process_is_running()
+        `assert_process_is_running()`
   1. **create**: a new entity is added to the system.
-        create_vlan(vlan_id=100)
+        `create_vlan(vlan_id=100)`
   1. **delete**: an existing entity is deleted from the system.
-        delete_vlan(vlan_id=100)
+        `delete_vlan(vlan_id=100)`
   1. **add**: add a reference or entity to an existing one on the system.
-        add_port_to_vlan(vlan_id=100, port="1")
+        `add_port_to_vlan(vlan_id=100, port="1")`
   1. **remove**: remove a reference or entity from an existing one on the system.
-        remove_port_from_vlan(vlan_id=100, port="1")
+        `remove_port_from_vlan(vlan_id=100, port="1")`
   1. **get**: get a reference to or information from an existing entity in the system.
-        get_process_pid(name="restd")
+        `get_process_pid(name="restd")`
   1. **wait_until**: wait for a condition on the system to be met.
-        wait_until_port_is_up(port="1")
+        `wait_until_port_is_up(port="1")`
   1. **send_..._packet**: send a packet.
-        send_mcast_packet(count=10)
+        `send_mcast_packet(count=10)`
   1. **set**: set an entity value.
-        set_vlan_state(state="down")
-1. If the step fixture object is needed as an argument, it should always be the last argument with default value of 'None'.
-        send_mcast_packet(count=1, step=step)
-1. Common functions should invoke the step() call internally if possible. This helps with keeping text consistent and reduces retyping
+        `set_vlan_state(state="down")`
+1. If the step fixture object is needed as an argument, it should always be the last argument with
+default value of 'None'.
+        `send_mcast_packet(count=1, step=step)`
+1. Common functions should invoke the step() call internally if possible. This helps with keeping
+text consistent and reduces retyping.
 1. Step messages should include argument information whenever possible.
-        step("### Adding VLAN {vlan_id} ###".format(**locals()))
-1. Autogenerated code shouldn't normally be checked in unless it is impossible/impractical to generate on the fly.
+        `step("### Adding VLAN {vlan_id} ###".format(**locals()))`
+1. Autogenerated code shouldn't normally be checked in unless it is impossible/impractical to
+generate on the fly.
 
 ## Guideline usage examples
-The following examples illustrate the guidelines in practice, along with design explanations where relevant.
+The following examples illustrate the guidelines in practice, along with design explanations where
+relevant.
 ### Service information example
 #### Library
     [process_information.py]
@@ -64,10 +81,16 @@ The following examples illustrate the guidelines in practice, along with design 
     """
 
     def assert_process_is_running(node, process_name, step=None):
-        """Assert a process is running"""
+        """
+        Assert a process is running
+
+        :param node: A modular framework node object that supports the vty shell
+        :param process_name: Filename of process to check if is running
+        :param step: Fixture used to print debugging information.  Default: None
+        """
 
         if step is not None:
-            step("### Assert {process_name} is running ###".format(**locals()))
+            step("Assert {process_name} is running".format(**locals()))
 
         cmd = "systemctl status %s" % (process_name)
         cmd_output = node(cmd, shell="bash")
@@ -76,7 +99,13 @@ The following examples illustrate the guidelines in practice, along with design 
         assert "active" in lines[2]
 
     def get_process_pid(node, process_name):
-        """Get a service's process ID (PID)"""
+        """
+        Get a service's process ID (PID)
+
+        :param node: A modular framework node object that supports the vty shell
+        :param process_name: Filename of process wich pid is to be returned
+        :returns: The pid of ``process_name``
+        """
 
         cmd = "systemctl show %s --property=MainPID" % (process_name)
         cmd_output = node(cmd, shell="bash")
@@ -92,12 +121,12 @@ The following examples illustrate the guidelines in practice, along with design 
     """
 
     def create_vlan_interface(node, vlan_id, ip_address):
-        """ Configure VLAN interface using libvtysh
+        """
+        Configure VLAN interface using libvtysh
 
-        Arguments:
-        node -- A modular framework node object that supports the vty shell
-        vlan_id -- VLAN ID for interface to be configured
-        ip_address -- IP address to configure on interface
+        :param node: A modular framework node object that supports the vty shell
+        :param vlan_id: VLAN ID for interface to be configured
+        :param ip_address: IP address to configure on interface
         """
 
         with node.libs.vtysh.ConfigVlan(vlan_id) as ctx:
@@ -106,6 +135,11 @@ The following examples illustrate the guidelines in practice, along with design 
         with node.libs.vtysh.ConfigInterfaceVlan(vlan_id) as ctx:
             ctx.ip_address(ip_address)
             ctx.no_shutdown()
+
+    # This variable lists the functions to be included in the API
+    __all__ = [
+        'create_vlan_interface'
+    ]
 
 #### Usage
     [test_restd_starts_on_boot.py]
@@ -136,3 +170,5 @@ The following examples illustrate the guidelines in practice, along with design 
         vlan.create_vlan_interface(node=sw1, vlan_id=1, ip_address=10.10.10.5/8)
 
         process_information.assert_process_is_running(node=sw1, process_name="restd", step=step)
+
+Follow the coding guidelines defined in [Writing doctrings for Sphinx](writing-docstrings.md) document for further details.
