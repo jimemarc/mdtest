@@ -125,7 +125,7 @@ As a convention, the format we will use for docstrings is as follows:
 
 ## Global variables
 
-For absolutely necessary cases, add important global variables and constants like this:
+For absolutely necessary cases, add important global variables and constants to the API like this:
 
     variable_name = 1000
     """This is an important global variable."""
