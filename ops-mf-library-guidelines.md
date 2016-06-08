@@ -49,39 +49,39 @@ comply with Flake8 (already required in order to write component tests).
 1. Action verbs:
   1. **assert**: assert a condition -- no values are returned.
 
-        assert_process_is_running()
+            assert_process_is_running()
 
   1. **create**: a new entity is added to the system.
 
-        create_vlan(vlan_id=100)
+            create_vlan(vlan_id=100)
 
   1. **delete**: an existing entity is deleted from the system.
 
-        delete_vlan(vlan_id=100)
+            delete_vlan(vlan_id=100)
 
   1. **add**: add a reference or entity to an existing one on the system.
 
-        add_port_to_vlan(vlan_id=100, port="1")
+            add_port_to_vlan(vlan_id=100, port="1")
 
   1. **remove**: remove a reference or entity from an existing one on the system.
 
-        remove_port_from_vlan(vlan_id=100, port="1")
+            remove_port_from_vlan(vlan_id=100, port="1")
 
   1. **get**: get a reference to or information from an existing entity in the system.
 
-        get_process_pid(name="restd")
+            get_process_pid(name="restd")
 
   1. **wait_until**: wait for a condition on the system to be met.
 
-        wait_until_port_is_up(port="1")
+            wait_until_port_is_up(port="1")
 
   1. **send_..._packet**: send a packet.
 
-        send_mcast_packet(count=10)
+            send_mcast_packet(count=10)
 
   1. **set**: set an entity value.
 
-        set_vlan_state(state="down")
+            set_vlan_state(state="down")
 
 1. If the step fixture object is needed as an argument, it should always be the last argument with
 default value of 'None'.
