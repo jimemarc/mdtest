@@ -1,6 +1,6 @@
 # Writing docstrings for Sphinx
 
-Before using Sphinx, we documented strings like this:
+Before using Sphinx, documentation strings had a format somewhat similar to this:
 
     """ Assert that multiples next-hops for a single static route are displayed
     on a the show ip route output using libvtysh.
@@ -52,7 +52,7 @@ For each module, describe the module in the docstring :
 
 ## Functions
 
-As a convention, the format we will use for docstrings is as follows:
+As a convention, the format for docstrings in topology common is as follows:
 
     def function_name1(param1, param2, param3):
        """

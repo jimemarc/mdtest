@@ -45,7 +45,7 @@ integers in default values.
 
 1. Provide sensible argument defaults which cover most use cases if possible.
 
-        create_vlan(vlan_id=100, mode="access", status="no_shutdown")
+        create_vlan(vlan_id="100", mode="access", status="no_shutdown")
 
 1. Action verbs:
   1. **assert**: assert a condition -- no values are returned.
@@ -54,19 +54,19 @@ integers in default values.
 
   1. **create**: a new entity is added to the system.
 
-            create_vlan(vlan_id=100)
+            create_vlan(vlan_id="100")
 
   1. **delete**: an existing entity is deleted from the system.
 
-            delete_vlan(vlan_id=100)
+            delete_vlan(vlan_id="100")
 
   1. **add**: add a reference or entity to an existing one on the system.
 
-            add_port_to_vlan(vlan_id=100, port="1")
+            add_port_to_vlan(vlan_id="100", port="1")
 
   1. **remove**: remove a reference or entity from an existing one on the system.
 
-            remove_port_from_vlan(vlan_id=100, port="1")
+            remove_port_from_vlan(vlan_id="100", port="1")
 
   1. **get**: get a reference to or information from an existing entity in the system.
 
@@ -78,7 +78,7 @@ integers in default values.
 
   1. **send_..._packet**: send a packet.
 
-            send_mcast_packet(count=10)
+            send_mcast_packet(count="10")
 
   1. **set**: set an entity value.
 
@@ -87,7 +87,7 @@ integers in default values.
 1. If the step fixture object is needed as an argument, it should always be the last argument with
 default value of 'None'.
 
-        send_mcast_packet(count=1, step=step)
+        send_mcast_packet(count="1", step=step)
 
 1. Common functions should invoke the step() call internally if possible. This helps with keeping
 text consistent and reduces retyping.
@@ -186,7 +186,7 @@ relevant.
     [type=openswitch name="Switch 1" image="topology/ops:latest"] sw1
     """
 
-    def test_restd_starts_on_boot(topology, log):
+    def test_restd_starts_on_boot(topology):
         sw1 = topology.get('sw1')
 
         assert sw1 is not None
