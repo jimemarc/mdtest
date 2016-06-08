@@ -28,16 +28,16 @@ comply with Flake8 (already required in order to write component tests).
   This allows autogenerating the documentation for the complete common code library, which users can
   consult to see if a function already exists.
 1. Lower case with underscores for variable and function names. Try to keep function names compact.
-    Ex. `restd_process_state = get_process_state(name="restd")`
+>    Ex. `restd_process_state = get_process_state(name="restd")`
 1. Avoid hardcoding values -- try to use function arguments if possible.
 1. Use named arguments to improved readability:
-    `create_vlan(vlan_id="100")`
+   > `create_vlan(vlan_id="100")`
 1. Prefer parameters vs creating many methods with different names.
-   ```create_vlan(vlan_id="100", mode="access")``` and `create_vlan(vlan_id="100", mode="native")`
+   > ```create_vlan(vlan_id="100", mode="access")``` and `create_vlan(vlan_id="100", mode="native")`
 
-    vs
+   > vs
 
-    `create_access_vlan(vlan_id="100")` and `create_native_vlan(vlan_id="100")`
+   > `create_access_vlan(vlan_id="100")` and `create_native_vlan(vlan_id="100")`
 1. Provide sensible argument defaults which cover most use cases if possible.
     Ex. `create_vlan(vlan_id=100, mode="access", status="no_shutdown")`
 1. Action verbs:
