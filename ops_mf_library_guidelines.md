@@ -36,11 +36,12 @@ comply with Flake8 (already required in order to write component tests).
 
         create_vlan(vlan_id="100")
 
-1. Prefer parameters vs creating many methods with different names.
+1. Prefer parameters vs creating many methods with different names and use strings instead of
+integers in default values.
 
         create_vlan(vlan_id="100", mode="access") and create_vlan(vlan_id="100", mode="native")
             vs
-        create_access_vlan(vlan_id="100") and create_native_vlan(vlan_id="100")
+        create_access_vlan(vlan_id=100) and create_native_vlan(vlan_id="100")
 
 1. Provide sensible argument defaults which cover most use cases if possible.
 
@@ -194,4 +195,5 @@ relevant.
 
         process_information.assert_process_is_running(node=sw1, process_name="restd", step=step)
 
-Follow the coding guidelines defined in [Writing doctrings for Sphinx](writing-docstrings.md) document for further details.
+Follow the coding guidelines defined in [Writing doctrings for Sphinx](writing_docstrings.md)
+document for further details.
