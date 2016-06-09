@@ -1,7 +1,7 @@
 # OPS Topology Common Library Guidelines
 
 ## Overview
-This document contains guidelines for teams working on topology common libraries. The main intent
+This document contains guidelines for teams working on modular framework libraries. The main intent
 is to provide solutions for common questions and provide consistency throughout different libraries,
 which are by nature, emergent, as new projects or improvements generate more testing needs.
 
@@ -107,14 +107,21 @@ relevant.
     [process_information.py]
     <license_text>
     """
-    Topology Common Process Information Library
+    Process Information module for OpenSwitch nodes
+
+    This file is part of the Topology Modular Framework Common Code Library.
+    It uses systemd (systemctl), the default service manager in OpenSwitch.
+
+    This module is not supported in:
+        - Modular Topology objects that do not support the Bash shell
+        - Systems that do not use systemd as its service manager
     """
 
     def assert_process_is_running(node, process_name, step=None):
         """
-        Assert a process is running
+        Uses systemctl to verify that a process is running
 
-        :param node: A topology common node object that supports the vty shell
+        :param node: A modular framework node object that supports the vty shell
         :param process_name: Filename of process to check if is running
         :param step: Fixture used to print debugging information.  Default: None
         """
@@ -132,9 +139,12 @@ relevant.
         """
         Get a service's process ID (PID)
 
-        :param node: A topology common node object that supports the vty shell
+        Returns 0 for a process that does not exist or is not running.
+
+        :param node: A modular framework node object that supports the vty shell
         :param process_name: Filename of process wich pid is to be returned
         :returns: The pid of ``process_name``
+        :rtype: int
         """
 
         cmd = "systemctl show %s --property=MainPID" % (process_name)
@@ -147,14 +157,19 @@ relevant.
     [vlan.py]
     <license_text>
     """
-    OPS Topology Common VLAN Management Library
+    VLAN CLI functions for OpenSwitch nodes
+
+    This file is part of the Topology Modular Framework Common Code Library.
+
+    This module is supported in:
+        - Modular Topology objects that support vtysh
     """
 
     def create_vlan_interface(node, vlan_id, ip_address, step=None):
         """
         Configure VLAN interface using libvtysh
 
-        :param node: A topology common node object that supports the vty shell
+        :param node: A modular framework node object that supports the vty shell
         :param vlan_id: VLAN ID for interface to be configured
         :param ip_address: IP address to configure on interface
         :param step: Fixture used to print debugging information.  Default: None
@@ -200,5 +215,5 @@ relevant.
 
         process_information.assert_process_is_running(node=sw1, process_name="restd", step=step)
 
-Follow the coding guidelines defined in [Writing doctrings for Sphinx](writing_docstrings.md)
+Follow the coding guidelines defined in the [Writing doctrings for Sphinx](writing_docstrings.md)
 document for further details.

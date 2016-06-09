@@ -74,14 +74,14 @@ The common code can be separated by the following criteria:
     - Place the files directly under `lib/topology_common/utils`
 
 
-Example that contains code for the VLAN feature and common code for process, packet and file
-management:
+Example that contains code for the VLAN feature and common code for services and file management:
 
 ```
 lib
 ├── topology_common
 │   ├── host
 │   │   ├── __init__.py (feature's specific Python package init file)
+│   │   ├── file_management.py
 │   │   └── vlan.py
 │   ├── ops
 │   │   ├── l2
@@ -89,6 +89,7 @@ lib
 │   │   │       ├── vlan.py
 │   │   │       └── vlan_vsctl.py
 │   │   └── system
+│   │       ├── process_information.py
 │   │       └── service.py
 │   └── utils
 │       └── mac_address.py
@@ -166,8 +167,6 @@ lib
 ```
 
 To access the production code from the `test_vlan.py` test file:
-
-For code that's contained in a sub-directory:
 ```
 from topology_common.ops.l2.vlan import vlan_vsctl
 ```
@@ -178,7 +177,8 @@ The following is expected with each contribution:
 
  1. Follow the coding guidelines defined in the [OPS Topology Common
     Library Guidelines](ops_tc_library_guidelines.md) document.
- 2. Self-documented code using docstrings.
+ 2. Self-documented code using docstrings. Follow the coding guidelines defined in the
+    [Writing doctrings for Sphinx](writing_docstrings.md) document for further details.
  3. Tests for every new feature or change to existing features.
  4. All existing tests pass. Verify by running tox in the root of the repo before sending for
 review.
