@@ -81,7 +81,7 @@ As a convention, the format for docstrings in topology common is as follows:
 
 ## Elaborate docstrings
 Sphinx understands reStructuredText, a lightweight markup language, and expands it for code API
-documentation.  Some useful formating is presented in the following docstring:
+documentation.  Some useful formatting is presented in the following docstring:
 
     """
     You can cross-reference functions with :py:func:`function_name1`,
@@ -95,24 +95,21 @@ documentation.  Some useful formating is presented in the following docstring:
     one for text in *italics*,
     double backquotes for ``code``.
 
-    To show an example in the interactive shell write it as it is:
+    To show an example in the interactive shell write it with one indentation and separated by
+    blank lines:
 
        >>> def foo(msj='Success'):
        ...     assert msj == 'Success', 'Foo Fail'
-
+       ...
        >>> retry_wrapper('Hello World','Error msj',1,3)(foo)()
        Hello World
 
-       >>> retry_wrapper('Hello World','Error msj',1,3)(foo)('fail')
+       >>> retry_wrapper('Hello World','Error msj',1,1)(foo)('fail')
        Hello World
        Error msj
        Waiting 1 seconds to retry
        Error msj
-       Waiting 1 seconds to retry
-       Error msj
-       Waiting 1 seconds to retry
-       Error msj
-       Retry time of 3 seconds expired
+       Retry time of 1 seconds expired
        Traceback (most recent call last):
           File "<stdin>", line 1, in <module>
           File "retry_wrapper.py", line 19, in wrapper
