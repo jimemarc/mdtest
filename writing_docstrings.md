@@ -123,7 +123,8 @@ documentation.  Some useful formatting is presented in the following docstring:
 
 ## Global variables
 
-For absolutely necessary cases, add important global variables and constants to the API like this:
+For absolutely necessary cases, add important global variables and constants to the API
+documentation like this:
 
     variable_name = 1000
     """This is an important global variable."""
