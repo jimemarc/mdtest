@@ -5,49 +5,63 @@ repositories in OpenSwitch.
 ## Directory structure
 ```
 .
-|_ MAINTAINERS
-|_ README.md
-|_ doc
-    |_ ... (other_doc_files)
-|_ lib
-  |_ topology_common
-    |_ host
-      |_ system
-        |_ host_common_system_module.py
-    |_ __init__.py (Python package init file)
-    |_ ops
-      |_ __init__.py (feature's specific Python package init file)
-      |_ feature_a
-        |_ feature_module.py
-      |_ feature_b
-      |_ system
-        |_ ops_common_system_module.py
-    |_ utils
-      |_ common_utils_module.py
-|_ ... (other_config_files)
-|_ setup.py
-|_ test
-  |_ host
-  |_ ops
-    |_ feature_a
-      |_ test_feature_a_module.py
-  |_ utils
-    |_ test_common_utils_module.py
-
+├── MAINTAINERS
+├── README.md
+├── doc
+│   └── ... (other_doc_files)
+├── lib
+│   ├── topology_common
+│   │   ├── host
+│   │   │   ├── __init__.py (feature's specific Python package init file)
+│   │   │   └── vlan.py
+│   │   ├── ops
+│   │   │   ├── l2
+│   │   │   │   ├── l2_physical_interfaces
+│   │   │   │   │   └── port_vsctl.py
+│   │   │   │   ├── link_aggregation
+│   │   │   │   │   └── link_aggregation.py
+│   │   │   │   └── vlans
+│   │   │   │       ├── vlan.py
+│   │   │   │       └── vlan_vsctl.py
+│   │   │   ├── l3
+│   │   │   │   ├── basic_l3
+│   │   │   │   │   ├── l3_interfaces.py
+│   │   │   │   │   └── routing.py
+│   │   │   │   ├── static_route
+│   │   │   │   │   └── static_route.py
+│   │   │   │   └── vrf
+│   │   │   │       └── vrf_vsctl.py
+│   │   │   └── system
+│   │   │       └── service.py
+│   │   └── utils
+│   │       ├── ip_address.py
+│   │       ├── mac_address.py
+│   │       └── tcpdump.py
+│   └── topology_common.egg-info
+├── ... (other_config_files)
+├── requirements.dev.txt
+├── setup.py
+└── test
+    ├── host
+    ├── ops
+    │   └── vxlan
+    │       └── test_vxlan_module.py
+    └── utils
+        └── test_tcpdump.py
 ```
 
 
 Under the root directory several configuration files such as the `setup.py` script, the
-`MANIFEST.in`, `requirements.txt` and others can be found.
+`MANIFEST.in`, `requirements.dev.txt` and others can be found.
 
 The most important directories for developers contributing common code are `lib/topology_common/`
-and `test/` where the production and test code live.
+and `test/`, where the production and test code live.
 
 
 ## Production code
 The production code lives in  the `lib/topology_common` directory.
 
-The common code can separated by the following criteria:
+The common code can be separated by the following criteria:
 
 - Is the code specific to a linux host?
     - Create the files directly under `lib/topology_common/host`
