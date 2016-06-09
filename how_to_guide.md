@@ -95,9 +95,9 @@ lib
 └── topology_common.egg-info
 ```
 
-** Note:**
-For every new directory created under `lib/topology_common`, a new `__init__.py` (can be empty)
-needs to be created under the directory, so that it is treated as a Python package.
+> ### Note
+> For every new directory created under `lib/topology_common`, a new `__init__.py` (can be empty)
+> needs to be created under the directory, so that it is treated as a Python package.
 
 ## Using the library in feature or component tests
 The Topology Common library is built and installed as a Python package for the tests if added to the
@@ -138,8 +138,7 @@ root directory with the command:
 tox
 ```
 
-> #### Note:
->
+> ### Note
 > Test will be executed as part of the workflow, check job.
 
 The `topology_common\lib` directory is a Python package and `tox` is responsible for installing the
