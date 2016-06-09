@@ -138,8 +138,8 @@ root directory with the command:
 tox
 ```
 
-| Note:
-| Test will be executed as part of the workflow, check job.
+> #### Note:
+> Test will be executed as part of the workflow, check job.
 
 The `topology_common\lib` directory is a Python package and `tox` is responsible for installing the
 package when running tests. Hence, in order to access the production code from the test code, simply
