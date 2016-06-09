@@ -6,6 +6,7 @@ repositories in OpenSwitch.
 ```
 .
 ├── MAINTAINERS
+├── MANIFEST.in
 ├── README.md
 ├── doc
 │   └── ... (other_doc_files)
@@ -44,8 +45,8 @@ repositories in OpenSwitch.
 └── test
     ├── host
     ├── ops
-    │   └── vxlan
-    │       └── test_vxlan_module.py
+    │   └── vlans
+    │       └── test_vlan.py
     └── utils
         └── test_tcpdump.py
 ```
@@ -77,20 +78,21 @@ Example that contains code for the VLAN feature and common code for process, pac
 management:
 
 ```
-|_ lib
-  |_ topology_common
-    |_ host
-      |_ file_management.py
-    |_ ops
-      |_ __init__.py (feature's specific Python package init file)
-      |_ l2
-        |_ vlan
-          |_ vlan_db_access.py
-          |_ vlan_management.py
-        |_ system
-          |_ process_management.py
-    |_ utils
-      |_ packet_management.py
+lib
+├── topology_common
+│   ├── host
+│   │   ├── __init__.py (feature's specific Python package init file)
+│   │   └── vlan.py
+│   ├── ops
+│   │   ├── l2
+│   │   │   └── vlans
+│   │   │       ├── vlan.py
+│   │   │       └── vlan_vsctl.py
+│   │   └── system
+│   │       └── service.py
+│   └── utils
+│       └── mac_address.py
+└── topology_common.egg-info
 ```
 
 ** Note:**
@@ -113,7 +115,7 @@ from topology_common.ops.system import service as ops.service
 ```
 or
 ```
-from topology_common.host import file_management
+from topology_common.host import vlan
 ```
 
 3. Use the code in the tests, e.g.:
@@ -136,6 +138,9 @@ root directory with the command:
 tox
 ```
 
+| Note:
+| Test will be executed as part of the workflow, check job.
+
 The `topology_common\lib` directory is a Python package and `tox` is responsible for installing the
 package when running tests. Hence, in order to access the production code from the test code, simply
 import the modules.
@@ -143,35 +148,36 @@ import the modules.
 Example using the following structure:
 
 ```
-|_ lib
-  |_ topology_common
-    |_ host
-      |_ file_management.py
-    |_ ops
-      |_ __init__.py (feature's specific Python package init file)
-      |_ l2
-        |_ vlan
-          |_ vlan_db_access.py
-          |_ vlan_management.py
-        |_ system
-          |_ process_management.py
-    |_ utils
-      |_ packet_management.py
+lib
+├── topology_common
+│   ├── host
+│   │   ├── __init__.py (feature's specific Python package init file)
+│   │   └── vlan.py
+│   ├── ops
+│   │   ├── l2
+│   │   │   └── vlans
+│   │   │       ├── vlan.py
+│   │   │       └── vlan_vsctl.py
+│   │   └── system
+│   │       └── service.py
+│   └── utils
+│       └── mac_address.py
+└── topology_common.egg-info
 ```
 
 To access the production code from the `test_vlan.py` test file:
 
 For code that's contained in a sub-directory:
 ```
-from topology_common.ops.l2.vlan import vlan_db_access
+from topology_common.ops.l2.vlan import vlan_vsctl
 ```
 
 
 ## Contributing to the library
 The following is expected with each contribution:
 
- 1. Follow the coding guidelines defined in the [OPS Modular Framework
-    Library Guidelines](ops_mf_library_guidelines.md) document.
+ 1. Follow the coding guidelines defined in the [OPS Topology Common
+    Library Guidelines](ops_tc_library_guidelines.md) document.
  2. Self-documented code using docstrings.
  3. Tests for every new feature or change to existing features.
  4. All existing tests pass. Verify by running tox in the root of the repo before sending for
