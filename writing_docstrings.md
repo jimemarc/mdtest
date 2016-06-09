@@ -19,14 +19,15 @@ Before using Sphinx, documentation strings had a format somewhat similar to this
     step -- A modular framework step object to set a mark for the test step.
     """
 
-To comply with Sphinx's tool that extracts information from docstrings,
-several things must be taken into account:
+> ### Note
+> Existing code with this format was refactored
 
--   No indentation change is allowed unless it is introduced by a Sphinx
-    directive
+To comply with Sphinx's tool that extracts information from docstrings,
+several considerations must be taken into account:
+
+-   No indentation change is allowed unless it is introduced by a Sphinx directive
 -   Inside a paragraph, new lines are ignored.
--   The list of parmeters will be generated writing some formatting mark
-    up.
+-   The list of parmeters will be generated writing some formatting markup.
 
 ## Packages
 
@@ -69,18 +70,18 @@ As a convention, the format for docstrings in topology common is as follows:
        :rtype: return_type
        """
 
-> **Tip**
->
+> ### Tip
 > - Use type information only in necessary cases.
 > - Use parameter lists and return values where applicable.
 
-> **Warning**
->
+> ### Warning
 > The indentation in the multiline description of `param2` is
 > mandatory. Any number of spaces produces the same output.
 
 
 ## Elaborate docstrings
+Sphinx understands reStructuredText, a lightweight markup language, and expands it for code API
+documentation.  Some useful formating is presented in the following docstring:
 
     """
     You can cross-reference functions with :py:func:`function_name1`,
@@ -119,7 +120,7 @@ As a convention, the format for docstrings in topology common is as follows:
           File "<stdin>", line 2, in foo
        AssertionError: Foo Fail
 
-    For more formatting marks see: http://www.sphinx-doc.org/en/stable/rest.html
+    For more formatting markup see: http://www.sphinx-doc.org/en/stable/rest.html
     """
 
 
