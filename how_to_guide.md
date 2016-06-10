@@ -140,7 +140,8 @@ tox
 ```
 
 > ### Note
-> Test will be executed as part of the workflow, check job.
+> A Jenkins' job will execute `tox` as part of the workflow.  Zuul will reject a review if `tox`
+> fails.
 
 The `topology_common\lib` directory is a Python package and `tox` is responsible for installing the
 package when running tests. Hence, in order to access the production code from the test code, simply

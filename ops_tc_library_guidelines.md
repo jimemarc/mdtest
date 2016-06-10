@@ -121,7 +121,7 @@ relevant.
         """
         Uses systemctl to verify that a process is running
 
-        :param node: A modular framework node object that supports the vty shell
+        :param node: A modular framework node object that supports the Bash shell
         :param process_name: Filename of process to check if is running
         :param step: Fixture used to print debugging information.  Default: None
         """
@@ -141,7 +141,7 @@ relevant.
 
         Returns 0 for a process that does not exist or is not running.
 
-        :param node: A modular framework node object that supports the vty shell
+        :param node: A modular framework node object that supports the Bash shell
         :param process_name: Filename of process wich pid is to be returned
         :returns: The pid of ``process_name``
         :rtype: int
@@ -169,14 +169,14 @@ relevant.
         """
         Configure VLAN interface using libvtysh
 
-        :param node: A modular framework node object that supports the vty shell
+        :param node: A modular framework node object that supports the Bash shell
         :param vlan_id: VLAN ID for interface to be configured
         :param ip_address: IP address to configure on interface
         :param step: Fixture used to print debugging information.  Default: None
         """
 
         if step is not None:
-            step("Assert {process_name} is running".format(**locals()))
+            step("Creating vlan interface {} in {}".format(vlan_id, node.alias))
 
         with node.libs.vtysh.ConfigVlan(vlan_id) as ctx:
             ctx.no_shutdown()
