@@ -23,7 +23,7 @@ For the organization of code itself, refer to the [How to guide](how_to_guide.md
 ## Guidelines
 1. Code should follow the [Python Style Guide](https://www.python.org/dev/peps/pep-0008/) as well as
 comply with Flake8 (already required in order to write component tests).
-  1. Follow th general guidelines in [PEP 0257](https://www.python.org/dev/peps/pep-0257/) for
+  1. Follow the general guidelines in [PEP 0257](https://www.python.org/dev/peps/pep-0257/) for
   docstrings.
   2. Use the guidelines in [AutoAPI](http://autoapi.readthedocs.io/en/latest/#documenting-the-code).
   This allows autogenerating the documentation for the complete topology common code library, which
@@ -104,10 +104,10 @@ The following examples illustrate the guidelines in practice, along with design 
 relevant.
 ### Service information example
 #### Library
-    [process_information.py]
+    [service.py]
     <license_text>
     """
-    Process Information module for OpenSwitch nodes
+    SystemD Service Management functions for OpenSwitch nodes
 
     This file is part of the Topology Modular Framework Common Code Library.
     It uses systemd (systemctl), the default service manager in OpenSwitch.
@@ -117,41 +117,44 @@ relevant.
         - Systems that do not use systemd as its service manager
     """
 
-    def assert_process_is_running(node, process_name, step=None):
+    def is_running(node, service, step=None):
         """
-        Uses systemctl to verify that a process is running
+        Uses systemctl to verify that a service is running
 
         :param node: A modular framework node object that supports the Bash shell
-        :param process_name: Filename of process to check if is running
+        :param service: Filename of process to check if is running
         :param step: Fixture used to print debugging information.  Default: None
+        :returns: Whether ``service`` is running or not
+        :rtype: Boolean
         """
 
         if step is not None:
-            step("Assert {process_name} is running".format(**locals()))
+            step("Assert {service} is running".format(**locals()))
 
-        cmd = "systemctl status %s" % (process_name)
-        cmd_output = node(cmd, shell="bash")
-        lines = output.split("\n")
+        output = node("systemctl status {service}".format(**locals()),
+                      shell='bash')
 
-        assert "active" in lines[2]
+        lines = output.split('\n')
+        return "active (running)" in (lines[2] if len(lines) > 2 else "")
 
-    def get_process_pid(node, process_name):
+    def get_pid(node, service):
         """
-        Get a service's process ID (PID)
+        Uses systemctl to obtain the PID of a running service
 
         Returns 0 for a process that does not exist or is not running.
 
         :param node: A modular framework node object that supports the Bash shell
-        :param process_name: Filename of process wich pid is to be returned
-        :returns: The pid of ``process_name``
+        :param service: The name of the service
+        :returns: The pid of ``service``
         :rtype: int
         """
 
-        cmd = "systemctl show %s --property=MainPID" % (process_name)
-        cmd_output = node(cmd, shell="bash")
-        lines = cmd_output.strip().split("=")
+        output = node("systemctl show {service} "
+                      "--property=MainPID | cat".format(**locals()),
+                      shell="bash")
 
-        return lines[1]
+        lines = output.split('=')
+        return int(lines[1]) if len(lines) > 1 else 0
 
 #### VLAN
     [vlan.py]
@@ -189,10 +192,10 @@ relevant.
     [test_restd_starts_on_boot.py]
     <license_text>
     """
-    Component Test: Process Information library usage example
+    Component Test: System library usage example
     """
 
-    from topology_common.ops.system import process_information
+    from topology_common.ops.system import service
     from topology_common.ops.l2.vlan import vlan
 
     TOPOLOGY = """
@@ -206,14 +209,14 @@ relevant.
     [type=openswitch name="Switch 1" image="topology/ops:latest"] sw1
     """
 
-    def test_restd_starts_on_boot(topology):
+    def test_restd_starts_on_boot(topology, step):
         sw1 = topology.get('sw1')
 
         assert sw1 is not None
 
         vlan.create_vlan_interface(node=sw1, vlan_id="1", ip_address="10.10.10.5/8")
 
-        process_information.assert_process_is_running(node=sw1, process_name="restd", step=step)
+        assert system.is_running(node=sw1, service="restd", step=step)
 
 Follow the coding guidelines defined in the [Writing doctrings for Sphinx](writing_docstrings.md)
 document for further details.

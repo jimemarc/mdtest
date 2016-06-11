@@ -1,28 +1,6 @@
 # Writing docstrings for Sphinx
 
-Before using Sphinx, documentation strings had a format somewhat similar to this:
-
-    """ Assert that multiples next-hops for a single static route are displayed
-    on a the show ip route output using libvtysh.
-
-    Arguments:
-    node -- A modular framework node object that supports the vty shell.
-    num_routes -- Number of routes expected on the output. Type: Integer.
-    network -- Network that will be verified for next-hops. Ex:'100.0.0.0/24'.
-    nexthop_init_1oct -- Initial value for the next-hop first octet.
-                         Type: Integer(1-255).
-    nexthop_final_1oct -- Final value for the next-hop first octet.
-                          Type: Integer(1-255).
-    nexthop_step_1oct -- Incremental step for the next-hop first octet.
-                         Type: Integer.
-    nexthop_4oct -- Host number for the next-hop. Type: Integer(1-255).
-    step -- A modular framework step object to set a mark for the test step.
-    """
-
-> ### Note
-> Existing code with this format was refactored
-
-To comply with Sphinx's tool that extracts information from docstrings,
+To comply with Sphinx, a tool that extracts information from docstrings,
 several considerations must be taken into account:
 
 -   No indentation change is allowed unless it is introduced by a Sphinx directive
@@ -43,7 +21,7 @@ in `__init__.py`.  One liners are OK.
 
 ## Modules
 
-For each module, describe the module in the docstring :
+For each module, describe the module in the docstring:
 
     """
     Brief description of module
