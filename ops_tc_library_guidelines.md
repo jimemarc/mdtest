@@ -216,7 +216,7 @@ relevant.
 
         vlan.create_vlan_interface(node=sw1, vlan_id="1", ip_address="10.10.10.5/8")
 
-        assert system.is_running(node=sw1, service="restd", step=step)
+        assert service.is_running(node=sw1, service="restd", step=step)
 
 Follow the coding guidelines defined in the [Writing doctrings for Sphinx](writing_docstrings.md)
 document for further details.
