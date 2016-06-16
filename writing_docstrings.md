@@ -134,14 +134,15 @@ Some people like giving examples of valid data for function parameters.
         step and step("Description. Try to use arguments {}".format(router_id))
 
 - Use two colons (::) to introduce a literal block
-- The colons *can't* go on the first line of the description
-- If you put them in a line of their own, indent them (Ex: param router_id)
+- The colons **must not** go on the first line of the description
+- If you put them in a line of their own, indent them (Ex: `param router_id`)
 - If they follow the text, separate them by at least one space
 - The literal block must follow the two colons with a blank line and extra indentation
 - The blank line following the literal code is optional, for esthetic purposes
 
-> ### Tip
-> Use the step function with default None and validate it
+> ### Tips
+> - Use the step function with default None and validate it
+> - Run `tox -e doc` or `tox` to make sure your docstrings are well formatted
 
 
 ## Global variables
